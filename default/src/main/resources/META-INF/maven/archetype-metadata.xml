@@ -1,0 +1,42 @@
+<archetype-descriptor xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.1.0 https://maven.apache.org/xsd/archetype-descriptor-1.1.0.xsd" 
+    name="default">
+    <fileSets>
+        <fileSet filtered="true" packaged="false">
+            <directory></directory>
+            <includes>
+                <include>*.md</include>
+            </includes>
+        </fileSet>
+        <fileSet filtered="true" packaged="true">
+            <directory>src/main/java</directory>
+            <includes>
+                <include>**/*.java</include>
+            </includes>
+        </fileSet>
+        <fileSet filtered="true" packaged="false">
+            <directory>src/main/resources</directory>
+        </fileSet>
+        <fileSet filtered="true" packaged="false">
+            <directory>src/main/k8s</directory>
+        </fileSet>
+        <fileSet filtered="true" packaged="false">
+            <directory>src/main/jk8ps</directory>
+        </fileSet>
+        <fileSet filtered="true" packaged="false">
+            <directory>src/main/jkube</directory>
+        </fileSet>
+        <fileSet filtered="true" packaged="true">
+            <directory>src/test/java</directory>
+        </fileSet>
+        <fileSet filtered="true" packaged="false">
+            <directory>src/test/resources</directory>
+        </fileSet>
+    </fileSets>
+    <requiredProperties>
+    <requiredProperty key="crd-name">
+      <defaultValue>MyCRD</defaultValue>
+    </requiredProperty>
+    <!-- requiredProperty key="property-without-default"/ -->
+  </requiredProperties>
+</archetype-descriptor>
