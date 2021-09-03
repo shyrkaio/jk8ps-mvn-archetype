@@ -1,0 +1,30 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    io.shyrka.erebus/archetype-name: "${artifactId}"
+    io.shyrka.erebus/archetype-version: "${version}"
+  name: ${crd-name.toLowerCase()}-operator
+rules:
+- apiGroups:
+  - ""
+  - "extensions"
+  - "apps"
+  resources:
+  - pods/status
+  verbs:
+  - '*'
+- apiGroups:
+  - "apiextensions.k8s.io"
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - '*'
+- apiGroups:
+  - "${package}"
+  resources:
+  - ${crd-name.toLowerCase()}
+  - ${crd-name.toLowerCase()}/status
+  verbs:
+  - '*'

@@ -1,5 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>${groupId}</groupId>
@@ -10,8 +11,13 @@
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <jib-maven-plugin.version>3.1.4</jib-maven-plugin.version>
         <io-javaoperatorsdk.version>1.9.2</io-javaoperatorsdk.version>
+        <io-fabric8.version>5.7.1</io-fabric8.version>
+        <jib-maven-plugin.version>3.1.4</jib-maven-plugin.version>
+        <jib-maven-image>${oci-repo-name}/${project.artifactId}:${project.version}</jib-maven-image>
     </properties>
 
     <dependencies>
@@ -39,14 +45,21 @@
         </dependency>
         <dependency>
             <groupId>io.fabric8</groupId>
+            <artifactId>crd-generator-api</artifactId>
+            <version>${io-fabric8.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.fabric8</groupId>
             <artifactId>kubernetes-server-mock</artifactId>
             <!-- @todo retreive the version from the io-javaoperatorsdk dependency -->
-            <version>5.7.1</version>
+            <version>${io-fabric8.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
 
     <build>
+        <defaultGoal>install jib:build k8s:apply k8s:helm</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
@@ -57,8 +70,40 @@
                         <image>gcr.io/distroless/java:11</image>
                     </from>
                     <to>
-                        <image>tomcat-operator</image>
+                        <image>${crd-name.toLowerCase()}-operator</image>
                     </to>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.jkube</groupId>
+                <artifactId>kubernetes-maven-plugin</artifactId>
+                <version>1.4.0</version>
+                <configuration>
+                    <!-- https://github.com/eclipse/jkube/issues/657 -->
+                    <jkube.mergeWithDekorate>true</jkube.mergeWithDekorate>
+                    <jkube.mergefabric8CRD>true</jkube.mergefabric8CRD>
+                    <buildStrategy>jib</buildStrategy>
+                    <skipBuild>true</skipBuild><!-- leave this to Jib plugin -->
+                    <resources>
+                        <customResourceDefinitions>
+                        <customResourceDefinition>${crd-name.toLowerCase()}.${package}</customResourceDefinition>
+                        </customResourceDefinitions>
+                        <serviceAccount>${project.artifactId}</serviceAccount>
+                        <controllerName>${project.artifactId}</controllerName>
+                        <imagePullPolicy>IfNotPresent</imagePullPolicy>
+                        <replicas>3</replicas>
+                        <liveness>
+                            <getUrl>http://:8080/health</getUrl>
+                            <tcpPort>8080</tcpPort>
+                            <initialDelaySeconds>3</initialDelaySeconds>
+                            <timeoutSeconds>3</timeoutSeconds>
+                        </liveness>
+                    </resources>
+                    <images>
+                        <image>
+                            <name>${jib-maven-image}</name>
+                        </image>
+                    </images>
                 </configuration>
             </plugin>
             <plugin>

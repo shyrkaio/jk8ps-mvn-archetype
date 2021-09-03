@@ -1,0 +1,15 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    io.shyrka.erebus/archetype-name: "${artifactId}"
+    io.shyrka.erebus/archetype-version: "${version}"
+  name: ${crd-name.toLowerCase()}-operator-admin
+subjects:
+- kind: ServiceAccount
+  name: ${crd-name.toLowerCase()}-operator
+  namespace: ${crd-name.toLowerCase()}-operator
+roleRef:
+  kind: ClusterRole
+  name: ${crd-name.toLowerCase()}-operator
+  apiGroup: ""
