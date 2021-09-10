@@ -20,6 +20,8 @@
         <jib-maven-plugin.version>3.1.4</jib-maven-plugin.version>
         <jib-maven-image>${oci-repo-name}/${project.artifactId}:${project.version}</jib-maven-image>
         <jkube-kubernetes-maven-plugin.version>1.4.0</jkube-kubernetes-maven-plugin.version>
+        <!-- project parameter -->
+        <jkube-deployment-spec-template-spec-containers-imagepullpolicy>IfNotPresent</jkube-deployment-spec-template-spec-containers-imagepullpolicy>
     </properties>
 
     <dependencies>
@@ -95,7 +97,7 @@
                     <skipBuild>true</skipBuild><!-- leave this to Jib plugin -->
                     <resources>
                         <customResourceDefinitions>
-                        <customResourceDefinition>${crd-name.toLowerCase()}.${package}</customResourceDefinition>
+                            <customResourceDefinition>${crd-name.toLowerCase()}.${package}</customResourceDefinition>
                         </customResourceDefinitions>
                         <serviceAccount>${project.artifactId}</serviceAccount>
                         <controllerName>${project.artifactId}</controllerName>
