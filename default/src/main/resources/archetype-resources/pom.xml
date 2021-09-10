@@ -14,10 +14,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <jib-maven-plugin.version>3.1.4</jib-maven-plugin.version>
-        <io-javaoperatorsdk.version>1.9.2</io-javaoperatorsdk.version>
-        <io-fabric8.version>5.7.1</io-fabric8.version>
+        <io-javaoperatorsdk.version>1.9.6</io-javaoperatorsdk.version>
+        <io-fabric8.version>5.7.3</io-fabric8.version>
+        <jackson.version>2.11.2</jackson.version>
         <jib-maven-plugin.version>3.1.4</jib-maven-plugin.version>
         <jib-maven-image>${oci-repo-name}/${project.artifactId}:${project.version}</jib-maven-image>
+        <jkube-kubernetes-maven-plugin.version>1.4.0</jkube-kubernetes-maven-plugin.version>
     </properties>
 
     <dependencies>
@@ -45,14 +47,19 @@
         </dependency>
         <dependency>
             <groupId>io.fabric8</groupId>
-            <artifactId>crd-generator-api</artifactId>
+            <artifactId>crd-generator-apt</artifactId>
             <version>${io-fabric8.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>io.fabric8</groupId>
+            <artifactId>kubernetes-client</artifactId>
+            <version>${io-fabric8.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.fabric8</groupId>
             <artifactId>kubernetes-server-mock</artifactId>
-            <!-- @todo retreive the version from the io-javaoperatorsdk dependency -->
+            <!-- @todo retreive the version from the io-javaoperatorsdk dependency ? -->
             <version>${io-fabric8.version}</version>
             <scope>test</scope>
         </dependency>
@@ -77,9 +84,11 @@
             <plugin>
                 <groupId>org.eclipse.jkube</groupId>
                 <artifactId>kubernetes-maven-plugin</artifactId>
-                <version>1.4.0</version>
+                <version>${jkube-kubernetes-maven-plugin.version}</version>
                 <configuration>
-                    <!-- https://github.com/eclipse/jkube/issues/657 -->
+                    <!-- @Todo Upgrate this
+                        https://github.com/eclipse/jkube/issues/657
+                    -->
                     <jkube.mergeWithDekorate>true</jkube.mergeWithDekorate>
                     <jkube.mergefabric8CRD>true</jkube.mergefabric8CRD>
                     <buildStrategy>jib</buildStrategy>
