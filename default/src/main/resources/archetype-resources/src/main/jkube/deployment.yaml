@@ -2,8 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    io.shyrka.erebus/archetype-name: "${artifactId}"
-    io.shyrka.erebus/archetype-version: "${version}"
+    io.shyrka.erebus/archetype-name: "${project.artifactId}"
+    io.shyrka.erebus/archetype-version: "${project.version}"
 spec:
   selector:
     matchLabels:
@@ -13,6 +13,12 @@ spec:
       labels:
         app: ${crd-name.toLowerCase()}-operator
     spec:
+      serviceAccountName: ${crd-name.toLowerCase()}-operator
+      securityContext:
+      #  runAsUser: 1234
+      #  runAsGroup: 1234
+      #  fsGroup: 1234
+      #  runAsNonRoot: true
       containers:
       - name: ${crd-name.toLowerCase()}-operator
         imagePullPolicy: IfNotPresent
@@ -28,3 +34,6 @@ spec:
             path: /health
             port: 8080
           initialDelaySeconds: 30
+          securityContext:
+          #  allowPrivilegeEscalation: false
+          #  readOnlyRootFilesystem: true
