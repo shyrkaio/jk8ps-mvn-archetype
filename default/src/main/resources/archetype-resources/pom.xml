@@ -15,6 +15,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <jib-maven-plugin.version>3.1.4</jib-maven-plugin.version>
         <io-javaoperatorsdk.version>1.9.6</io-javaoperatorsdk.version>
+        <slf4j-impl.version>1.7.32</slf4j-impl.version>
         <io-fabric8.version>5.7.3</io-fabric8.version>
         <jackson.version>2.11.2</jackson.version>
         <jib-maven-plugin.version>3.1.4</jib-maven-plugin.version>
@@ -29,6 +30,11 @@
             <groupId>io.javaoperatorsdk</groupId>
             <artifactId>operator-framework</artifactId>
             <version>${io-javaoperatorsdk.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j-impl.version}</version>
         </dependency>
         <dependency>
             <groupId>org.takes</groupId>
@@ -68,7 +74,7 @@
     </dependencies>
 
     <build>
-        <defaultGoal>install jib:build k8s:apply k8s:helm</defaultGoal>
+        <defaultGoal>install jib:build k8s:resource k8s:apply k8s:helm</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
@@ -79,7 +85,7 @@
                         <image>gcr.io/distroless/java:11</image>
                     </from>
                     <to>
-                        <image>${crd-name.toLowerCase()}-operator</image>
+                        <image>${jib-maven-image}</image>
                     </to>
                 </configuration>
             </plugin>
@@ -101,8 +107,8 @@
                         </customResourceDefinitions>
                         <serviceAccount>${project.artifactId}</serviceAccount>
                         <controllerName>${project.artifactId}</controllerName>
-                        <imagePullPolicy>IfNotPresent</imagePullPolicy>
-                        <replicas>3</replicas>
+                        <imagePullPolicy>${jkube-deployment-spec-template-spec-containers-imagepullpolicy}</imagePullPolicy>
+                        <replicas>1</replicas>
                         <liveness>
                             <getUrl>http://:8080/health</getUrl>
                             <tcpPort>8080</tcpPort>

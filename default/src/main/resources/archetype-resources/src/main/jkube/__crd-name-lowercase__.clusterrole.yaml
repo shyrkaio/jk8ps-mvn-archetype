@@ -12,6 +12,8 @@ rules:
   - "extensions"
   - "apps"
   resources:
+  - service/status
+  - deployment/status
   - pods/status
   verbs:
   - '*'

@@ -13,14 +13,5 @@ import io.fabric8.kubernetes.model.annotation.Version;
 @Plural("${crd-name.toLowerCase()}s")
 
 public class ${crd-name} extends CustomResource<${crd-name}Spec, ${crd-name}Status> implements Namespaced {
-        private String sample;
-
-        public String getSample() {
-                return sample;
-        }
-
-        public void setSample(String sample) {
-                this.sample = sample;
-        }
 
 }

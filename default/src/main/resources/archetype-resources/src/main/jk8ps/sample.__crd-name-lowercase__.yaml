@@ -1,0 +1,6 @@
+apiVersion: "${package}/v1"
+kind: ${crd-name}
+metadata:
+  name:  ${crd-name.toLowerCase()}-sample
+spec:
+  sample: "hello"
