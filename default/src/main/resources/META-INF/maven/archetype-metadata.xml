@@ -44,15 +44,15 @@
         </fileSet>
     </fileSets>
     <requiredProperties>
-    <requiredProperty key="crd-name">
-      <defaultValue>MyCRD</defaultValue>
-    </requiredProperty>
+        <requiredProperty key="crd-name">
+            <defaultValue>MyCRD</defaultValue>
+        </requiredProperty>
         <requiredProperty key="crd-name-lowercase">
             <defaultValue>${crd-name.toLowerCase()}</defaultValue>
         </requiredProperty>
-<requiredProperty key="oci-repo-name">
-      <defaultValue>username</defaultValue>
-    </requiredProperty>
+        <requiredProperty key="oci-repo-name">
+            <defaultValue>username</defaultValue>
+        </requiredProperty>
     <!-- requiredProperty key="property-without-default"/ -->
-  </requiredProperties>
+    </requiredProperties>
 </archetype-descriptor>

@@ -14,9 +14,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <jib-maven-plugin.version>3.1.4</jib-maven-plugin.version>
-        <io-javaoperatorsdk.version>1.9.6</io-javaoperatorsdk.version>
         <slf4j-impl.version>1.7.32</slf4j-impl.version>
-        <io-fabric8.version>5.7.3</io-fabric8.version>
+        <io-javaoperatorsdk.version>1.9.8</io-javaoperatorsdk.version>
+        <io-fabric8.version>5.9.0</io-fabric8.version>
         <jackson.version>2.11.2</jackson.version>
         <jib-maven-plugin.version>3.1.4</jib-maven-plugin.version>
         <jib-maven-image>${oci-repo-name}/${project.artifactId}:${project.version}</jib-maven-image>
