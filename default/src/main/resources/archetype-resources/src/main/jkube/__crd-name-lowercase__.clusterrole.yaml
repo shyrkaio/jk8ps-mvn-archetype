@@ -12,8 +12,8 @@ rules:
   - "extensions"
   - "apps"
   resources:
-  - service/status
-  - deployment/status
+  - services/status
+  - deployments/status
   - pods/status
   verbs:
   - '*'
@@ -26,7 +26,7 @@ rules:
 - apiGroups:
   - "${package}"
   resources:
-  - ${crd-name.toLowerCase()}
-  - ${crd-name.toLowerCase()}/status
+  - ${crd-name.toLowerCase()}s
+  - ${crd-name.toLowerCase()}s/status
   verbs:
   - '*'
